@@ -277,6 +277,20 @@ Run("Keeps existing taskbar monitor indexes stable when All monitors is availabl
     AssertSequenceEqual([0], monitorIndexes);
 });
 
+Run("Quotes Windows startup executable paths", () =>
+{
+    string command = StartupCommandFormatter.FormatExecutablePath(@"C:\Users\giangQuan\Documents\Projects\New project 3\FluentFlyout\FluentFlyout.exe");
+
+    AssertEqual(@"""C:\Users\giangQuan\Documents\Projects\New project 3\FluentFlyout\FluentFlyout.exe""", command);
+});
+
+Run("Does not double quote Windows startup executable paths", () =>
+{
+    string command = StartupCommandFormatter.FormatExecutablePath(@"""C:\Program Files\FluentFlyout\FluentFlyout.exe""");
+
+    AssertEqual(@"""C:\Program Files\FluentFlyout\FluentFlyout.exe""", command);
+});
+
 static void Run(string name, Action test)
 {
     try
